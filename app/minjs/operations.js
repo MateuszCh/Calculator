@@ -1,0 +1,1 @@
+function addition(n,t){return n=parseFloat(n),t=parseFloat(t),n+t}function substraction(n,t){return n-t}function multiplication(n,t){return n*t}function division(n,t){return n/t}
