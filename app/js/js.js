@@ -1,49 +1,84 @@
 /**
  * Created by Mateusz Chybiorz on 2016-10-19.
  */
-var buttons = document.getElementsByTagName("button");
-var result = document.getElementById("result");
-var tekst;
-var operand1;
-var operand2;
-var operation;
-var dzialanie;
+var operand1 = "";
+var operand2 = "";
+var toEval = "";
+var flaga = false;
 var wynik;
-for(var i = 0; i < buttons.length; i++){
-    buttons[i].addEventListener("click", function (e) {
-        if(this.innerHTML == "C"){
-            result.textContent = "0";
-            tekst = "";
-            operand2 = "";
+var button = document.getElementsByTagName("button");
+var result = document.getElementById("result");
+for(var i = 0; i < button.length; i++){
+    button[i].addEventListener("click", function () {
+        if(this.className == "numbers"){
+            if(result.value == "0" || flaga){
+                result.value = "";
+            }
+
+            operand1 += this.textContent;
+            result.value += this.textContent;
+            toEval += this.textContent;
+            flaga = false;
+        } else if(this.className == "operations") {
+            operand2 = operand1;
             operand1 = "";
-            operation = "";
+
+            if(this.textContent == "X"){
+                toEval += "*";
+            } else{
+
+                toEval += this.textContent;
+            }
+            result.value = this.textContent;
+            flaga = true;
+        } else  if(this.className == "score"){
+            wynik = eval(toEval);
+            result.value = wynik;
+
+        } else if(this.className == "delete"){
+            operand1 = "";
+            operand2 = "";
+            toEval = "";
+            flaga = false;
             wynik = "";
-        } else if(this.className === "numbers"){
-            if(!tekst || result.textContent == "0"){
-                result.textContent = "";
-            }
-            tekst = this.textContent;
-            result.textContent += tekst;
-        } else if(this.className === "operations"){
-            operand1 = tekst;
-            tekst = "";
-            result.textContent = "";
-            operation = this.textContent;
-        } else if(this.className === "score"){
-            operand2 = tekst;
-            if(operation == "+"){
-                wynik = addition(operand1, operand2);
-            }   else if(operation == "-"){
-                wynik = substraction(operand1, operand2);
-            } else if (operation == "X"){
-                wynik = multiplication(operand1, operand2);
-            } else if (operation == "/"){
-                wynik = division(operand1, operand2);
-            }
-            result.textContent = wynik;
+            result.value = "0";
         }
-    }, false);
+    })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // console.log(document.getElementById("pier").innerHTML);
+    // console.log(document.getElementById("dwa").innerHTML);
+
 
 
 
