@@ -10,12 +10,18 @@
   box-sizing: border-box;
 }
 
+.sum  {
+  margin: 0;
+  direction: rtl;
+  flex-basis: 5%;
+
+}
+
 .result {
   flex-basis: 20%;
   margin: 0;
   direction: rtl;
   font-size: 90px;
-  display: flex;
   align-items: center;
 }
 
