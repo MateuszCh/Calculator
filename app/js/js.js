@@ -78,6 +78,7 @@ for(var i = 0; i < button.length; i++){
                 toEval = toEval.substring(0, toEval.length-1);
                 result.value = result.value.substring(0, result.value.length-1);
                 sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
+                operand1 = operand1.substring(0, operand1.length-1);
             }
 
             if(result.value.length == 0){
