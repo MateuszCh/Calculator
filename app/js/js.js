@@ -105,15 +105,19 @@ for(var i = 0; i < button.length; i++){
 
 
 
+function mask(number) {
+    number = String(number).split('')
+    var length = number.length
+
+    for (var ii = 3; ii < length; ii += 3) {
+        number.splice(length - ii, 0, ' ')
+    }
+
+    return number.join('')
+}
 
 
 
-
-
-
-    // console.log(document.getElementById("pier").innerHTML);
-    // console.log(document.getElementById("dwa").innerHTML);
-
-
-
-
+//TO DO
+// -- brak możlwości wciśnięcia operacji przed liczbą
+// -- kontynuacja działań po znaku równa się

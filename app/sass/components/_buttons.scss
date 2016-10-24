@@ -1,0 +1,43 @@
+button  {
+  height: 14%;
+  display: block;
+  background-color: $btn-color;
+  border: none;
+  color: $btn-text-color;
+  font-size: 1.5rem;
+  border-radius: 5%;
+
+
+  &:hover {
+    background-color: lighten( $btn-color, 10% );
+  }
+
+  @include mq-not-mobile{
+    box-shadow: 0 5px rgba($btn-color, .5),
+    0 15px 20px rgba($btn-color, .5);
+
+    &:active  {
+      box-shadow: none;
+      position: relative;
+      top:5px;
+    }
+  }
+}
+.delete, .deleteLastNumber, .deleteOneDigit {
+  background-color: $delete-btn-color;
+
+  &:hover {
+    background-color: lighten( $delete-btn-color, 10% );
+  }
+
+  @include mq-not-mobile{
+    box-shadow: 0 5px rgba($delete-btn-color, .5),
+    0 15px 20px rgba($delete-btn-color, .5);
+  }
+}
+.numbers, .oneNumberOperations[value="changeSign"]  {
+  background-color: lighten($btn-color, 15%);
+  &:hover {
+    background-color: lighten($btn-color, 25%);
+  }
+}

@@ -1,0 +1,7 @@
+@mixin mq-not-mobile  {
+  @media (min-width: 740px), (min-height: 420px)
+  and (orientation: landscape)
+  {
+    @content;
+  }
+}
