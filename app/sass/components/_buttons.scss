@@ -6,38 +6,47 @@ button  {
   color: $btn-text-color;
   font-size: 1.5rem;
   border-radius: 5%;
+  transition: background-color 1s ease-out;
+  cursor: pointer;
 
 
   &:hover {
-    background-color: lighten( $btn-color, 10% );
+    background-color: lighten( $btn-color, 20% );
+    transition: background-color 0.5s ease-out;
   }
 
   @include mq-not-mobile{
-    box-shadow: 0 5px rgba($btn-color, .5),
-    0 15px 20px rgba($btn-color, .5);
-
-    &:active  {
-      box-shadow: none;
-      position: relative;
-      top:5px;
-    }
+    box-shadow: 0 5px rgba($btn-color, .4),
+    0 7px 10px rgba($btn-color, .5);
+    //&:active  {
+    //  box-shadow: none;
+    //  position: relative;
+    //  top: 5px;
+    //}
   }
+}
+
+.active {
+  @include mq-not-mobile{
+    animation: clicked 0.2s linear;
+  }
+
 }
 .delete, .deleteLastNumber, .deleteOneDigit {
   background-color: $delete-btn-color;
 
   &:hover {
-    background-color: lighten( $delete-btn-color, 10% );
+    background-color: lighten( $delete-btn-color, 20%);
   }
 
   @include mq-not-mobile{
-    box-shadow: 0 5px rgba($delete-btn-color, .5),
-    0 15px 20px rgba($delete-btn-color, .5);
+    box-shadow: 0 5px rgba($delete-btn-color, .4),
+    0 7px 10px rgba($delete-btn-color, .5);
   }
 }
 .numbers, .oneNumberOperations[value="changeSign"]  {
-  background-color: lighten($btn-color, 15%);
+  background-color: $numbers-btn-color;
   &:hover {
-    background-color: lighten($btn-color, 25%);
+    background-color: lighten($numbers-btn-color, 10%);
   }
 }

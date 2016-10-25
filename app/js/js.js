@@ -14,7 +14,7 @@ var operations = document.getElementsByClassName("operations");
 for(var i = 0; i < button.length; i++){
     button[i].addEventListener("click", function () {
 
-        if(this.className == "numbers"){
+        if(this.classList.contains("numbers")){
             if(result.value == "0" || operationClicked ||calcDone){
                 result.value = "";
             }
@@ -30,7 +30,7 @@ for(var i = 0; i < button.length; i++){
             if(sum.textContent == "00"){
                 sum.textContent = "0";
             }
-        } else if(this.className == "operations") {
+        } else if(this.classList.contains("operations")) {
 
             if(operationClicked){
                 toEval = toEval.substring(0, toEval.length-1);
@@ -49,7 +49,7 @@ for(var i = 0; i < button.length; i++){
             console.log("Operand1: " + operand1);
             console.log("Operand2: " + operand2);
 
-        } else  if(this.className == "score"){
+        } else  if(this.classList.contains("score")){
             if(!calcDone){
                 for(var i = 0; i < operations.length; i++){
                     if(toEval.charAt(toEval.length-1) == operations[i].value){
@@ -65,7 +65,7 @@ for(var i = 0; i < button.length; i++){
                 operationClicked = false;
                 calcDone = true;
             }
-        } else if(this.className == "delete"){
+        } else if(this.classList.contains("delete")){
             operand1 = "";
             operand2 = "";
             toEval = "";
@@ -73,7 +73,7 @@ for(var i = 0; i < button.length; i++){
             wynik = "";
             result.value = "0";
             sum.textContent = "";
-        } else if(this.className == "deleteOneDigit"){
+        } else if(this.classList.contains("deleteOneDigit")){
             if(!(result.value.length == 0) && !(result.value == "0")){
                 toEval = toEval.substring(0, toEval.length-1);
                 result.value = result.value.substring(0, result.value.length-1);
@@ -84,14 +84,14 @@ for(var i = 0; i < button.length; i++){
             if(result.value.length == 0){
                 result.value = "0";
             }
-        } else if(this.className == "deleteLastNumber"){
+        } else if(this.classList.contains("deleteLastNumber")){
 
             var toDelete = operand1.length;
             toEval = toEval.substring(0,toEval.length-toDelete);
             result.value = "0";
             sum.textContent = sum.textContent.substring(0, sum.textContent.length-toDelete);
             operand1 = "";
-        } else if (this.className == "oneNumberOperations"){
+        } else if (this.classList.contains("oneNumberOperations")){
             for(var prop in oneNumberOperations){
                 if(this.value == oneNumberOperations[prop].type){
                     oneNumberOperations[prop].operation();
@@ -99,11 +99,13 @@ for(var i = 0; i < button.length; i++){
             }
         }
         console.log(toEval);
+        this.classList.toggle("active");
+        var ten = this;
+        setTimeout(function () {
+            ten.classList.toggle("active");
+        }, 200);
     })
 }
-
-
-
 
 function mask(number) {
     number = String(number).split('')
@@ -121,3 +123,4 @@ function mask(number) {
 //TO DO
 // -- brak możlwości wciśnięcia operacji przed liczbą
 // -- kontynuacja działań po znaku równa się
+// aby resuly oraz sum nie wykraczały poza miejsce przeznaczone na nie

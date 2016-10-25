@@ -5,3 +5,18 @@
     @content;
   }
 }
+
+
+@keyframes clicked {
+  0%  {
+
+  }
+  50% {
+    box-shadow: none;
+    position: relative;
+    top:5px;
+  }
+  100%{
+
+  }
+}
