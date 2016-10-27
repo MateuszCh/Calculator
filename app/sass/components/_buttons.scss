@@ -28,11 +28,11 @@ button  {
 
 .active {
   @include mq-not-mobile{
-    animation: clicked 0.2s linear;
+    animation: clicked 0.3s linear;
   }
 
 }
-.delete, .deleteLastNumber, .deleteOneDigit {
+.clear, .deleteLastNumber, .deleteOneDigit {
   background-color: $delete-btn-color;
 
   &:hover {
