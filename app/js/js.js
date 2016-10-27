@@ -11,22 +11,32 @@
     var sum = document.getElementById("sum");
     var calcDone = false;
     var basicOperations = document.getElementsByClassName("operations");
-
-    var TypeOfButton    =   {
+    var wynik;
+    var TypeOfButton = {
         numbers: {
             type: "numbers",
             action: function (e) {
-                if(result.value == "0" || operationClicked ||calcDone){
+                if((operand1.indexOf(".") > -1 && e.value == ".") || (operand1 == "0" && e.value == "0")) {
+                    return;
+                }
+                if((result.value == "0" && e.value != ".")  || operationClicked ||calcDone){
                     result.value = "";
                 }
-                if(sum.textContent == "0"){
-                    sum.textContent = "";
+                if(sum.textContent.charAt(sum.textContent.length -1) == "0" && e.value != "."){
+                    sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                 }
-                operand1 += e.value;
-                result.value += e.value;
-                toEval += e.value;
+                if(calcDone){
+                    operand1 = e.value;
+                    result.value = e.value;
+                    toEval = e.value;
+                    sum.textContent = e.value;
+                } else {
+                    operand1 += e.value;
+                    toEval += e.value;
+                    result.value += e.value;
+                    sum.textContent += e.value;
+                }
                 operationClicked = false;
-                sum.textContent += e.value;
                 calcDone = false;
                 if(sum.textContent == "00"){
                     sum.textContent = "0";
@@ -37,7 +47,7 @@
             type: "operations",
             action: function (e) {
                 if(operand1 || operand2){
-                    if(operationClicked){
+                    if(operationClicked || isNaN(toEval.charAt(toEval.length-1))){
                         toEval = toEval.substring(0, toEval.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         result.value = result.value.substring(0, result.value.length-1);
@@ -45,10 +55,23 @@
                         operand2 = operand1;
                         operand1 = "";
                     }
+                    wynik = eval(toEval);
+                    wynik = wynik.toFixed(4);
+                    wynik = wynik.toString();
+                    while(wynik.charAt(wynik.length-1) == "0"){
+                        wynik = wynik.substring(0, wynik.length-1);
+                    }
+                    if(wynik.charAt(wynik.length-1) == "."){
+                        wynik =wynik.substring(0, wynik.length-1);
+                    }
+                    result.value = wynik;
+                    if(calcDone){
+                        sum.textContent = toEval + e.value;
+                    } else {
+                        sum.textContent += e.value;
+                    }
                     toEval += e.value;
-                    result.value = e.value;
                     operationClicked = true;
-                    sum.textContent += e.value;
                     calcDone = false;
                 }
             }
@@ -62,11 +85,20 @@
                             toEval = toEval.substring(0, toEval.length-1);
                         }
                     }
-                    result.value = eval(toEval);
+                    wynik = eval(toEval);
+                    wynik = wynik.toFixed(4);
+                    wynik = wynik.toString();
+                    while(wynik.charAt(wynik.length-1) == "0"){
+                        wynik = wynik.substring(0, wynik.length-1);
+                    }
+                    if(wynik.charAt(wynik.length-1) == "."){
+                        wynik =wynik.substring(0, wynik.length-1);
+                    }
+                    result.value = wynik;
                     sum.textContent = "";
-                    operand1 = "";
+                    operand1 = wynik;
                     operand2 = "";
-                    // toEval = "";
+                    toEval = wynik;
                     operationClicked = false;
                     calcDone = true;
                 }
@@ -87,19 +119,13 @@
             type: "deleteOneDigit",
             action: function () {
                 if(!calcDone){
-                    if(!(result.value.length == 0) && !(result.value == "0")){
+                    if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length=1) == "."){
                         toEval = toEval.substring(0, toEval.length-1);
                         result.value = result.value.substring(0, result.value.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
                     }
-                    if(result.value.length == 0){
-                        result.value = "0";
-                    }
                 }
-                // if(calcDone){
-                //     TypeOfButton.clear.action();
-                // }
             }
         },
         deleteLastNumber: {
@@ -151,10 +177,11 @@
                 }
             }
             classForAWhile(e.target, "active", 300);
+            console.log(operand1);
+            console.log(toEval);
         }, false)
     }
 })()
-
 
 
 // function mask(number) {
@@ -171,8 +198,4 @@
 //
 //
 // //TO DO
-// // -- brak możlwości wciśnięcia operacji przed liczbą
-// // -- kontynuacja działań po znaku równa się
-// // aby resuly oraz sum nie wykraczały poza miejsce przeznaczone na nie
-// // bład gdy mam operand1 operacje i operand 2, nastepnie usuwam po jednym znaku i daje
-// // nowa operacje to mam dwa znaki obok siebie, i tego pozniejszego nie moge juz zmienic
+// // aby result oraz sum nie wykraczały poza miejsce przeznaczone na nie

@@ -12,7 +12,7 @@ var Operations = {
     root: {
         type: "root",
         operation: function (operand1) {
-            return Math.sqrt(operand1);
+                return Math.sqrt(operand1);
         }
     },
     reciprocal: {
