@@ -20,27 +20,31 @@
                 if((operand1.indexOf(".") > -1 && e.value == ".") || (operand1 == "0" && e.value == "0")) {
                     return;
                 }
-                if((result.value == "0" && e.value != ".")  || operationClicked ||calcDone){
-                    result.value = "";
+                if((result.textContent == "0" && e.value != ".")  || operationClicked ||calcDone){
+                    result.textContent = "";
                 }
                 if(sum.textContent == "" && e.value == "."){
                     sum.textContent = "0";
                 } else if(operand2 && !operand1 && e.value == "."){
                     sum.textContent += "0";
-                    result.value +="0";
+                    result.textContent +="0";
                 }
                 if(sum.textContent == "0" && e.value != "."){
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                 }
                 if(calcDone){
                     operand1 = e.value;
-                    result.value = e.value;
+                    result.textContent = e.value;
                     toEval = e.value;
                     sum.textContent = e.value;
                 } else {
                     operand1 += e.value;
                     toEval += e.value;
-                    result.value += e.value;
+                    console.log("przed dodaniem: " + result.textContent);
+                    result.textContent += e.value;
+                    console.log("po dodaniu: " + result.textContent);
+                    result.textContent = mask(result.textContent);
+                    console.log("po przemianie: " + result.textContent);
                     sum.textContent += e.value;
                 }
                 operationClicked = false;
@@ -57,7 +61,7 @@
                     if(operationClicked || isNaN(toEval.charAt(toEval.length-1))){
                         toEval = toEval.substring(0, toEval.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
-                        result.value = result.value.substring(0, result.value.length-1);
+                        result.textContent = result.textContent.substring(0, result.textContent.length-1);
                     } else {
                         operand2 = operand1;
                         operand1 = "";
@@ -72,7 +76,7 @@
                         wynik =wynik.substring(0, wynik.length-1);
                     }
                     toEval = wynik;
-                    result.value = wynik;
+                    result.textContent = mask(wynik);
                     if(calcDone){
                         sum.textContent = toEval + e.value;
                     } else {
@@ -102,7 +106,7 @@
                     if(wynik.charAt(wynik.length-1) == "."){
                         wynik =wynik.substring(0, wynik.length-1);
                     }
-                    result.value = wynik;
+                    result.textContent = mask(wynik);
                     sum.textContent = "";
                     operand1 = wynik;
                     operand2 = "";
@@ -119,7 +123,7 @@
                 operand2 = "";
                 toEval = "";
                 operationClicked = false;
-                result.value = "0";
+                result.textContent = "0";
                 sum.textContent = "";
             }
         },
@@ -129,11 +133,11 @@
                 if(!calcDone){
                     if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length-1) == "."){
                         toEval = toEval.substring(0, toEval.length-1);
-                        result.value = result.value.substring(0, result.value.length-1);
+                        result.textContent = result.textContent.substring(0, result.textContent.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
-                        if(result.value == ""){
-                            result.value = "0";
+                        if(result.textContent == ""){
+                            result.textContent = "0";
                         }
                     }
                 }
@@ -145,7 +149,7 @@
                 if(operand1 || operand2){
                     var toDelete = operand1.length;
                     toEval = toEval.substring(0,toEval.length-toDelete);
-                    result.value = "0";
+                    result.textContent = "0";
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-toDelete);
                     operand1 = "";
                 }
@@ -179,7 +183,7 @@
                             operand1 = wynik;
                             toEval = toEval.substring(0, toEval.length - len);
                             toEval += operand1;
-                            result.value = operand1;
+                            result.textContent = mask(operand1);
                             sum.textContent = sum.textContent.substring(0, sum.textContent.length-lenForResult);
                             sum.textContent += operand1;
                         }
@@ -194,6 +198,36 @@
             element.classList.remove(classes)
         }, duration);
     }
+
+    function mask(number) {
+        number = number.replace(/ /g, "");
+        console.log("po usunięciu spacji:" + number);
+        if(number.indexOf(".") > -1){
+            var positionOfDot = number.indexOf(".");
+            var partToDot = number.substring(0, positionOfDot);
+            var partFromDot = number.substring(positionOfDot);
+            partToDot = String(partToDot).split("");
+            var length = partToDot.length
+
+            for(var ii = 3; ii < length; ii+= 3){
+                partToDot.splice(length - ii, 0, " ");
+            }
+            partToDot = partToDot.join("");
+            number = partToDot + partFromDot;
+            return number;
+        } else {
+            number = String(number).split('');
+            length = number.length;
+
+            for (var ii = 3; ii < length; ii += 3) {
+                number.splice(length - ii, 0, ' ');
+            }
+
+            return number.join('');
+        }
+
+    }
+
     for (var i = 0; i < button.length; i++){
         button[i].addEventListener("click", function (e) {
             for (var prop in TypeOfButton){
@@ -206,21 +240,11 @@
             console.log(toEval);
         }, false)
     }
-})()
+})();
 
 
-// function mask(number) {
-//     number = String(number).split('')
-//     var length = number.length
-//
-//     for (var ii = 3; ii < length; ii += 3) {
-//         number.splice(length - ii, 0, ' ')
-//     }
-//
-//     return number.join('')
-// }
-// // uwzględnić kropkę
-//
-//
-// //TO DO
-// // aby result oraz sum nie wykraczały poza miejsce przeznaczone na nie
+
+
+
+
+
