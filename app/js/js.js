@@ -71,6 +71,7 @@
                     if(wynik.charAt(wynik.length-1) == "."){
                         wynik =wynik.substring(0, wynik.length-1);
                     }
+                    toEval = wynik;
                     result.value = wynik;
                     if(calcDone){
                         sum.textContent = toEval + e.value;
@@ -166,7 +167,16 @@
                                 lenForResult = len;
                             }
                             operand1 = Operations[prop].operation(operand1);
-                            operand1 = operand1.toString();
+                            wynik = operand1;
+                            wynik = wynik.toFixed(4);
+                            wynik = wynik.toString();
+                            while(wynik.charAt(wynik.length-1) == "0"){
+                                wynik = wynik.substring(0, wynik.length-1);
+                            }
+                            if(wynik.charAt(wynik.length-1) == "."){
+                                wynik =wynik.substring(0, wynik.length-1);
+                            }
+                            operand1 = wynik;
                             toEval = toEval.substring(0, toEval.length - len);
                             toEval += operand1;
                             result.value = operand1;
