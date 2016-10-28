@@ -16,13 +16,20 @@
         numbers: {
             type: "numbers",
             action: function (e) {
+
                 if((operand1.indexOf(".") > -1 && e.value == ".") || (operand1 == "0" && e.value == "0")) {
                     return;
                 }
                 if((result.value == "0" && e.value != ".")  || operationClicked ||calcDone){
                     result.value = "";
                 }
-                if(sum.textContent.charAt(sum.textContent.length -1) == "0" && e.value != "."){
+                if(sum.textContent == "" && e.value == "."){
+                    sum.textContent = "0";
+                } else if(operand2 && !operand1 && e.value == "."){
+                    sum.textContent += "0";
+                    result.value +="0";
+                }
+                if(sum.textContent == "0" && e.value != "."){
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                 }
                 if(calcDone){
@@ -119,11 +126,14 @@
             type: "deleteOneDigit",
             action: function () {
                 if(!calcDone){
-                    if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length=1) == "."){
+                    if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length-1) == "."){
                         toEval = toEval.substring(0, toEval.length-1);
                         result.value = result.value.substring(0, result.value.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
+                        if(result.value == ""){
+                            result.value = "0";
+                        }
                     }
                 }
             }
@@ -150,12 +160,17 @@
                     for(var prop in Operations){
                         if(e.value == Operations[prop].type){
                             var len = operand1.length;
+                            if(operand1.charAt(0) == "."){
+                                var lenForResult = len + 1;
+                            } else {
+                                lenForResult = len;
+                            }
                             operand1 = Operations[prop].operation(operand1);
                             operand1 = operand1.toString();
                             toEval = toEval.substring(0, toEval.length - len);
                             toEval += operand1;
                             result.value = operand1;
-                            sum.textContent = sum.textContent.substring(0, sum.textContent.length-len);
+                            sum.textContent = sum.textContent.substring(0, sum.textContent.length-lenForResult);
                             sum.textContent += operand1;
                         }
                     }
