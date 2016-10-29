@@ -20,31 +20,31 @@
                 if((operand1.indexOf(".") > -1 && e.value == ".") || (operand1 == "0" && e.value == "0")) {
                     return;
                 }
-                if((result.textContent == "0" && e.value != ".")  || operationClicked ||calcDone){
-                    result.textContent = "";
+                if((result.value == "0" && e.value != ".")  || operationClicked ||calcDone){
+                    result.value = "";
                 }
                 if(sum.textContent == "" && e.value == "."){
                     sum.textContent = "0";
                 } else if(operand2 && !operand1 && e.value == "."){
                     sum.textContent += "0";
-                    result.textContent +="0";
+                    result.values +="0";
                 }
                 if(sum.textContent == "0" && e.value != "."){
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                 }
                 if(calcDone){
                     operand1 = e.value;
-                    result.textContent = e.value;
+                    result.value = e.value;
                     toEval = e.value;
                     sum.textContent = e.value;
                 } else {
                     operand1 += e.value;
                     toEval += e.value;
-                    console.log("przed dodaniem: " + result.textContent);
-                    result.textContent += e.value;
-                    console.log("po dodaniu: " + result.textContent);
-                    result.textContent = mask(result.textContent);
-                    console.log("po przemianie: " + result.textContent);
+                    console.log("przed dodaniem: " + result.value);
+                    result.value += e.value;
+                    console.log("po dodaniu: " + result.value);
+                    result.value = mask(result.value);
+                    console.log("po przemianie: " + result.value);
                     sum.textContent += e.value;
                 }
                 operationClicked = false;
@@ -61,7 +61,7 @@
                     if(operationClicked || isNaN(toEval.charAt(toEval.length-1))){
                         toEval = toEval.substring(0, toEval.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
-                        result.textContent = result.textContent.substring(0, result.textContent.length-1);
+                        result.value = result.value.substring(0, result.value.length-1);
                     } else {
                         operand2 = operand1;
                         operand1 = "";
@@ -76,7 +76,7 @@
                         wynik =wynik.substring(0, wynik.length-1);
                     }
                     toEval = wynik;
-                    result.textContent = mask(wynik);
+                    result.value = mask(wynik);
                     if(calcDone){
                         sum.textContent = toEval + e.value;
                     } else {
@@ -106,7 +106,7 @@
                     if(wynik.charAt(wynik.length-1) == "."){
                         wynik =wynik.substring(0, wynik.length-1);
                     }
-                    result.textContent = mask(wynik);
+                    result.value = mask(wynik);
                     sum.textContent = "";
                     operand1 = wynik;
                     operand2 = "";
@@ -123,7 +123,7 @@
                 operand2 = "";
                 toEval = "";
                 operationClicked = false;
-                result.textContent = "0";
+                result.value = "0";
                 sum.textContent = "";
             }
         },
@@ -133,11 +133,11 @@
                 if(!calcDone){
                     if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length-1) == "."){
                         toEval = toEval.substring(0, toEval.length-1);
-                        result.textContent = result.textContent.substring(0, result.textContent.length-1);
+                        result.value = result.value.substring(0, result.value.length-1);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
-                        if(result.textContent == ""){
-                            result.textContent = "0";
+                        if(result.value == ""){
+                            result.value = "0";
                         }
                     }
                 }
@@ -149,7 +149,7 @@
                 if(operand1 || operand2){
                     var toDelete = operand1.length;
                     toEval = toEval.substring(0,toEval.length-toDelete);
-                    result.textContent = "0";
+                    result.value = "0";
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-toDelete);
                     operand1 = "";
                 }
@@ -183,7 +183,7 @@
                             operand1 = wynik;
                             toEval = toEval.substring(0, toEval.length - len);
                             toEval += operand1;
-                            result.textContent = mask(operand1);
+                            result.value = mask(operand1);
                             sum.textContent = sum.textContent.substring(0, sum.textContent.length-lenForResult);
                             sum.textContent += operand1;
                         }
@@ -240,6 +240,127 @@
             console.log(toEval);
         }, false)
     }
+    var one = document.querySelector(".numbers[value='1']");
+    var two = document.querySelector(".numbers[value='2']");
+    var three = document.querySelector(".numbers[value='3']");
+    var four = document.querySelector(".numbers[value='4']");
+    var five = document.querySelector(".numbers[value='5']");
+    var six = document.querySelector(".numbers[value='6']");
+    var seven = document.querySelector(".numbers[value='7']");
+    var eight = document.querySelector(".numbers[value='8']");
+    var nine = document.querySelector(".numbers[value='9']");
+    var zero = document.querySelector(".numbers[value='0']");
+    var del = document.querySelector(".clear");
+    var add = document.querySelector(".operations[value='+']");
+    var subt = document.querySelector(".operations[value='-']");;
+    var divis = document.querySelector(".operations[value='/']");;
+    var multi = document.querySelector(".operations[value='*']");;
+    var equal = document.querySelector(".score[value='=']");;
+    var dot = document.querySelector(".numbers[value='.']");
+    var oneDigit = document.querySelector(".deleteOneDigit");
+
+
+    document.addEventListener("keydown", function (e) {
+        switch (e.key){
+            case "1":
+                one.click();
+                break;
+            case "2":
+                two.click();
+                break;
+            case "3":
+                three.click();
+                break;
+            case "4":
+                four.click();
+                break;
+            case "5":
+                five.click();
+                break;
+            case "6":
+                six.click();
+                break;
+            case "7":
+                seven.click();
+                break;
+            case "8":
+                eight.click();
+                break;
+            case "9":
+                nine.click();
+                break;
+            case "0":
+                zero.click();
+                break;
+            case "Delete":
+                del.click()
+                break;
+            case "+":
+                add.click();
+                break;
+            case "-":
+                subt.click();
+                break;
+            case "/":
+                divis.click();
+                break;
+            case "*":
+                multi.click();
+                break;
+            case "Enter":
+                equal.click();
+                break;
+            case ",":
+            case ".":
+                dot.click();
+                break;
+            case "Backspace":
+                oneDigit.click();
+                break;
+        }
+    })
+
+
+    // document.addEventListener("keydown", function (e) {
+    //     if(e.keyCode == "97"){
+    //         one.click();
+    //     } else if (e.keyCode =="98"){
+    //         two.click();
+    //     } else if (e.keyCode =="99"){
+    //         three.click();
+    //     } else if (e.keyCode =="100"){
+    //         four.click();
+    //     } else if (e.keyCode =="101"){
+    //         five.click();
+    //     } else if (e.keyCode =="102"){
+    //         six.click();
+    //     } else if (e.keyCode =="103"){
+    //         seven.click();
+    //     } else if (e.keyCode =="104"){
+    //         eight.click();
+    //     } else if (e.keyCode =="105"){
+    //         nine.click();
+    //     } else if (e.keyCode =="96"){
+    //         zero.click();
+    //     } else if (e.keyCode == "46"){
+    //         del.click();
+    //     } else if (e.keyCode == "107"){
+    //         add.click();
+    //     } else if (e.keyCode == "109"){
+    //         subt.click();
+    //     } else if (e.keyCode == "111"){
+    //         divis.click();
+    //     } else if (e.keyCode == "106"){
+    //         multi.click();
+    //     } else if (e.keyCode == "13"){
+    //         equal.click();
+    //     } else if (e.keyCode == "110"){
+    //         dot.click();
+    //     } else if (e.keyCode == "8"){
+    //         oneDigit.click();
+    //     }
+    // })
+
 })();
 
 

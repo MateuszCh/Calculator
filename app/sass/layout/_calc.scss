@@ -27,12 +27,12 @@
   padding: 0 10px;
   color: $btn-color;
   text-align: right;
-  word-wrap: break-word;
+  //word-wrap: break-word;
 }
 
 .result {
   background-color: $calc-color;
-  word-wrap: break-word;
+  //word-wrap: break-word;
   color: $btn-color;
   flex-basis: 20%;
   text-align: right;
