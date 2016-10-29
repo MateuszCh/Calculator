@@ -133,7 +133,9 @@
                 if(!calcDone){
                     if(!isNaN(toEval.charAt(toEval.length-1)) || toEval.charAt(toEval.length-1) == "."){
                         toEval = toEval.substring(0, toEval.length-1);
+                        result.value = result.value.replace(/ /g, "");
                         result.value = result.value.substring(0, result.value.length-1);
+                        result.value = mask(result.value);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
                         if(result.value == ""){
@@ -191,7 +193,8 @@
                 }
             }
         }
-    }
+    };
+
     function classForAWhile(element, classes, duration) {
         element.classList.add(classes);
         setTimeout(function () {
@@ -200,6 +203,9 @@
     }
 
     function mask(number) {
+        if(number == Infinity){
+            return number;
+        }
         number = number.replace(/ /g, "");
         console.log("po usunięciu spacji:" + number);
         if(number.indexOf(".") > -1){
@@ -225,11 +231,11 @@
 
             return number.join('');
         }
-
     }
 
     for (var i = 0; i < button.length; i++){
         button[i].addEventListener("click", function (e) {
+            e = e || window.event;
             for (var prop in TypeOfButton){
                 if(this.classList.contains(TypeOfButton[prop].type)){
                     TypeOfButton[prop].action(e.target);
@@ -240,6 +246,7 @@
             console.log(toEval);
         }, false)
     }
+
     var one = document.querySelector(".numbers[value='1']");
     var two = document.querySelector(".numbers[value='2']");
     var three = document.querySelector(".numbers[value='3']");
@@ -259,108 +266,128 @@
     var dot = document.querySelector(".numbers[value='.']");
     var oneDigit = document.querySelector(".deleteOneDigit");
 
-
     document.addEventListener("keydown", function (e) {
-        switch (e.key){
-            case "1":
-                one.click();
-                break;
-            case "2":
-                two.click();
-                break;
-            case "3":
-                three.click();
-                break;
-            case "4":
-                four.click();
-                break;
-            case "5":
-                five.click();
-                break;
-            case "6":
-                six.click();
-                break;
-            case "7":
-                seven.click();
-                break;
-            case "8":
-                eight.click();
-                break;
-            case "9":
-                nine.click();
-                break;
-            case "0":
-                zero.click();
-                break;
-            case "Delete":
-                del.click()
-                break;
-            case "+":
-                add.click();
-                break;
-            case "-":
-                subt.click();
-                break;
-            case "/":
-                divis.click();
-                break;
-            case "*":
-                multi.click();
-                break;
-            case "Enter":
-                equal.click();
-                break;
-            case ",":
-            case ".":
-                dot.click();
-                break;
-            case "Backspace":
-                oneDigit.click();
-                break;
+        e = e || window.event;
+        e.preventDefault();
+        if(e.key){
+            switch (e.key){
+                case "1":
+                    one.click();
+                    break;
+                case "2":
+                    two.click();
+                    break;
+                case "3":
+                    three.click();
+                    break;
+                case "4":
+                    four.click();
+                    break;
+                case "5":
+                    five.click();
+                    break;
+                case "6":
+                    six.click();
+                    break;
+                case "7":
+                    seven.click();
+                    break;
+                case "8":
+                    eight.click();
+                    break;
+                case "9":
+                    nine.click();
+                    break;
+                case "0":
+                    zero.click();
+                    break;
+                case "Delete":
+                    del.click()
+                    break;
+                case "+":
+                    add.click();
+                    break;
+                case "-":
+                    subt.click();
+                    break;
+                case "/":
+                    divis.click();
+                    break;
+                case "*":
+                    multi.click();
+                    break;
+                case "Enter":
+                    equal.click();
+                    break;
+                case ",":
+                case ".":
+                    dot.click();
+                    break;
+                case "Backspace":
+                    oneDigit.click();
+                    break;
+            }
+        } else {
+            switch (e.keyCode){
+                case "97":
+                    one.click();
+                    break;
+                case "98":
+                    two.click();
+                    break;
+                case "99":
+                    three.click();
+                    break;
+                case "100":
+                    four.click();
+                    break;
+                case "101":
+                    five.click();
+                    break;
+                case "102":
+                    six.click();
+                    break;
+                case "103":
+                    seven.click();
+                    break;
+                case "104":
+                    eight.click();
+                    break;
+                case "105":
+                    nine.click();
+                    break;
+                case "96":
+                    zero.click();
+                    break;
+                case "46":
+                    del.click()
+                    break;
+                case "107":
+                    add.click();
+                    break;
+                case "109":
+                    subt.click();
+                    break;
+                case "111":
+                    divis.click();
+                    break;
+                case "106":
+                    multi.click();
+                    break;
+                case "13":
+                    equal.click();
+                    break;
+                case "110":
+                case "188":
+                case "190":
+                    dot.click();
+                    break;
+                case "8":
+                    oneDigit.click();
+                    break;
+            }
         }
     })
-
-
-    // document.addEventListener("keydown", function (e) {
-    //     if(e.keyCode == "97"){
-    //         one.click();
-    //     } else if (e.keyCode =="98"){
-    //         two.click();
-    //     } else if (e.keyCode =="99"){
-    //         three.click();
-    //     } else if (e.keyCode =="100"){
-    //         four.click();
-    //     } else if (e.keyCode =="101"){
-    //         five.click();
-    //     } else if (e.keyCode =="102"){
-    //         six.click();
-    //     } else if (e.keyCode =="103"){
-    //         seven.click();
-    //     } else if (e.keyCode =="104"){
-    //         eight.click();
-    //     } else if (e.keyCode =="105"){
-    //         nine.click();
-    //     } else if (e.keyCode =="96"){
-    //         zero.click();
-    //     } else if (e.keyCode == "46"){
-    //         del.click();
-    //     } else if (e.keyCode == "107"){
-    //         add.click();
-    //     } else if (e.keyCode == "109"){
-    //         subt.click();
-    //     } else if (e.keyCode == "111"){
-    //         divis.click();
-    //     } else if (e.keyCode == "106"){
-    //         multi.click();
-    //     } else if (e.keyCode == "13"){
-    //         equal.click();
-    //     } else if (e.keyCode == "110"){
-    //         dot.click();
-    //     } else if (e.keyCode == "8"){
-    //         oneDigit.click();
-    //     }
-    // })
-
 })();
 
 
