@@ -27,7 +27,7 @@
                     sum.textContent = "0";
                 } else if(operand2 && !operand1 && e.value == "."){
                     sum.textContent += "0";
-                    result.values +="0";
+                    result.value +="0";
                 }
                 if(sum.textContent == "0" && e.value != "."){
                     sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
@@ -40,11 +40,8 @@
                 } else {
                     operand1 += e.value;
                     toEval += e.value;
-                    console.log("przed dodaniem: " + result.value);
                     result.value += e.value;
-                    console.log("po dodaniu: " + result.value);
                     result.value = mask(result.value);
-                    console.log("po przemianie: " + result.value);
                     sum.textContent += e.value;
                 }
                 operationClicked = false;
@@ -207,7 +204,6 @@
             return number;
         }
         number = number.replace(/ /g, "");
-        console.log("po usunięciu spacji:" + number);
         if(number.indexOf(".") > -1){
             var positionOfDot = number.indexOf(".");
             var partToDot = number.substring(0, positionOfDot);
@@ -242,8 +238,10 @@
                 }
             }
             classForAWhile(e.target, "active", 300);
-            console.log(operand1);
-            console.log(toEval);
+            result.style.fontSize = "70px";
+            sum.style.fontSize = "30px";
+            changeFontSize(sum);
+            changeFontSize(result);
         }, false)
     }
 
@@ -268,7 +266,7 @@
 
     document.addEventListener("keydown", function (e) {
         e = e || window.event;
-        e.preventDefault();
+        // e.preventDefault();
         if(e.key){
             switch (e.key){
                 case "1":
@@ -388,6 +386,28 @@
             }
         }
     })
+
+    function changeFontSize(element) {
+        if(checkOverflow(element)){
+            var size = element.style.fontSize;
+            size = size.substring(0, size.length-2);
+            size = size - 1;
+            size += "px";
+            element.style.fontSize = size;
+            changeFontSize(element);
+        }
+    }
+
+    function checkOverflow(el) {
+        var curOverflow = el.style.overflow;
+        if ( !curOverflow || curOverflow === "visible" )
+            el.style.overflow = "hidden";
+        var isOverflowing = el.clientWidth < el.scrollWidth
+            || el.clientHeight < el.scrollHeight;
+        el.style.overflow = curOverflow;
+        return isOverflowing;
+    }
+
 })();
 
 
