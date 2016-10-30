@@ -17,12 +17,7 @@ button  {
 
   @include mq-not-mobile{
     box-shadow: 0 5px rgba($btn-color, .4),
-    0 7px 10px rgba($btn-color, .5);
-    //&:active  {
-    //  box-shadow: none;
-    //  position: relative;
-    //  top: 5px;
-    //}
+                0 7px 10px rgba($btn-color, .5);
   }
 }
 

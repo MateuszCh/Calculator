@@ -5,7 +5,6 @@ var Operations = {
     power: {
         type: "power",
         operation: function (operand1) {
-
             return Math.pow(operand1, 2);
         }
     },
@@ -44,4 +43,4 @@ var Operations = {
             }
         }
     }
-}
+};
