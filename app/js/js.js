@@ -13,6 +13,25 @@
     var result = document.getElementById("result");
     var sum = document.getElementById("sum");
     var basicOperations = document.getElementsByClassName("operations");
+    //variables containing elements of buttons which can be clicked on keyboard
+    var one = document.querySelector(".numbers[value='1']");
+    var two = document.querySelector(".numbers[value='2']");
+    var three = document.querySelector(".numbers[value='3']");
+    var four = document.querySelector(".numbers[value='4']");
+    var five = document.querySelector(".numbers[value='5']");
+    var six = document.querySelector(".numbers[value='6']");
+    var seven = document.querySelector(".numbers[value='7']");
+    var eight = document.querySelector(".numbers[value='8']");
+    var nine = document.querySelector(".numbers[value='9']");
+    var zero = document.querySelector(".numbers[value='0']");
+    var del = document.querySelector(".clear");
+    var add = document.querySelector(".operations[value='+']");
+    var subt = document.querySelector(".operations[value='-']");
+    var divis = document.querySelector(".operations[value='/']");
+    var multi = document.querySelector(".operations[value='*']");
+    var equal = document.querySelector(".score[value='=']");
+    var dot = document.querySelector(".numbers[value='.']");
+    var oneDigit = document.querySelector(".deleteOneDigit");
 
     // Object containing functions for each button
     var TypeOfButton = {
@@ -25,7 +44,7 @@
                     return;
                 }
                 //delete 0 from begining of result element if next input is not a dot or we inputs next number
-                if((result.value == "0" && e.value != ".")  || operationClicked ||calcDone){
+                if((result.value == "0" && e.value != ".")  || operationClicked || calcDone){
                     result.value = "";
                 }
                 //adds 0 to sum element if we input dot at the begining of calculation
@@ -51,7 +70,7 @@
                     operand1 += e.value;
                     toEval += e.value;
                     result.value += e.value;
-                    result.value = mask(result.value);
+                    result.value = threeSpaces(result.value);
                     sum.textContent += e.value;
                 }
                 operationClicked = false;
@@ -87,7 +106,7 @@
                     }
                     toEval = wynik;
                     //adds spaces every three digit in integer
-                    result.value = mask(wynik);
+                    result.value = threeSpaces(wynik);
                     if(calcDone){
                         sum.textContent = toEval + e.value;
                     } else {
@@ -123,7 +142,7 @@
                         wynik =wynik.substring(0, wynik.length-1);
                     }
                     //adds spaces every three digit in integer
-                    result.value = mask(wynik);
+                    result.value = threeSpaces(wynik);
                     sum.textContent = "";
                     operand1 = wynik;
                     operand2 = "";
@@ -159,7 +178,7 @@
                         result.value = result.value.replace(/ /g, "");
                         //delete last character from calculation
                         result.value = result.value.substring(0, result.value.length-1);
-                        result.value = mask(result.value);
+                        result.value = threeSpaces(result.value);
                         sum.textContent = sum.textContent.substring(0, sum.textContent.length-1);
                         operand1 = operand1.substring(0, operand1.length-1);
                         //if everything was deleted enter 0 in result element
@@ -205,6 +224,7 @@
                             }
                             operand1 = Operations[prop].operation(operand1);
                             wynik = operand1;
+                            wynik = parseFloat(wynik);
                             wynik = wynik.toFixed(4);
                             wynik = wynik.toString();
                             //delete zeros from end of decimal number
@@ -218,7 +238,7 @@
                             operand1 = wynik;
                             toEval = toEval.substring(0, toEval.length - len);
                             toEval += operand1;
-                            result.value = mask(operand1);
+                            result.value = threeSpaces(operand1);
                             sum.textContent = sum.textContent.substring(0, sum.textContent.length-lenForResult);
                             sum.textContent += operand1;
                         }
@@ -235,7 +255,7 @@
         }, duration);
     }
     //function adding space every three digits
-    function mask(number) {
+    function threeSpaces(number) {
         //do nothing if input = Infinity;
         if(number == Infinity){
             return number;
@@ -267,6 +287,28 @@
             return number.join('');
         }
     }
+    //function changing font size of element text automatically, so text is
+    //not overflowing element
+    function changeFontSize(element) {
+        if(checkOverflow(element)){
+            var size = element.style.fontSize;
+            size = size.substring(0, size.length-2);
+            size = size - 1;
+            size += "px";
+            element.style.fontSize = size;
+            changeFontSize(element);
+        }
+    }
+    //function checking if elements text is overflowing
+    function checkOverflow(element) {
+        var curOverflow = element.style.overflow;
+        if ( !curOverflow || curOverflow === "visible" )
+            element.style.overflow = "hidden";
+        var isOverflowing = element.clientWidth < element.scrollWidth
+            || element.clientHeight < element.scrollHeight;
+        element.style.overflow = curOverflow;
+        return isOverflowing;
+    }
     for (var i = 0; i < button.length; i++){
         button[i].addEventListener("click", function (e) {
             e = e || window.event;
@@ -282,25 +324,6 @@
             changeFontSize(result);
         }, false)
     }
-    //variables containing elements of buttons which can be clicked on keyboard
-    var one = document.querySelector(".numbers[value='1']");
-    var two = document.querySelector(".numbers[value='2']");
-    var three = document.querySelector(".numbers[value='3']");
-    var four = document.querySelector(".numbers[value='4']");
-    var five = document.querySelector(".numbers[value='5']");
-    var six = document.querySelector(".numbers[value='6']");
-    var seven = document.querySelector(".numbers[value='7']");
-    var eight = document.querySelector(".numbers[value='8']");
-    var nine = document.querySelector(".numbers[value='9']");
-    var zero = document.querySelector(".numbers[value='0']");
-    var del = document.querySelector(".clear");
-    var add = document.querySelector(".operations[value='+']");
-    var subt = document.querySelector(".operations[value='-']");
-    var divis = document.querySelector(".operations[value='/']");
-    var multi = document.querySelector(".operations[value='*']");
-    var equal = document.querySelector(".score[value='=']");
-    var dot = document.querySelector(".numbers[value='.']");
-    var oneDigit = document.querySelector(".deleteOneDigit");
     //simulate click events on buttons when inputs is made with keyboard
     document.addEventListener("keydown", function (e) {
         e = e || window.event;
@@ -424,26 +447,4 @@
             }
         }
     });
-    //function changing font size of element text automatically, so text is
-    //not overflowing element
-    function changeFontSize(element) {
-        if(checkOverflow(element)){
-            var size = element.style.fontSize;
-            size = size.substring(0, size.length-2);
-            size = size - 1;
-            size += "px";
-            element.style.fontSize = size;
-            changeFontSize(element);
-        }
-    }
-    //function checking if elements text is overflowing
-    function checkOverflow(element) {
-        var curOverflow = element.style.overflow;
-        if ( !curOverflow || curOverflow === "visible" )
-            element.style.overflow = "hidden";
-        var isOverflowing = element.clientWidth < element.scrollWidth
-            || element.clientHeight < element.scrollHeight;
-        element.style.overflow = curOverflow;
-        return isOverflowing;
-    }
 })();

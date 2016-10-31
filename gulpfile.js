@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     prefix = require('gulp-autoprefixer'),
     browserSync = require('browser-sync'),
     reload = browserSync.reload,
+    concat = require('gulp-concat'),
     sourcemaps = require('gulp-sourcemaps');
 
 function errorLog(error){
@@ -30,9 +31,10 @@ gulp.task('styles', function(){
 // Scripts Task
 //Uglifies
 gulp.task('scripts', function(){
-    gulp.src('app/js/*.js')
+    gulp.src(['app/js/oneNumberOperations.js', 'app/js/js.js'])
         .pipe(uglify())
         .on('error', errorLog)
+        .pipe(concat('main.js'))
         .pipe(gulp.dest('app/minjs'))
         .pipe(reload({stream: true}));
 });
@@ -57,6 +59,6 @@ gulp.task('watch', function(){
     gulp.watch('app/js/*.js', ['scripts']);
     gulp.watch('app/**/*.html', ['html']);
     gulp.watch('app/sass/**/*.scss', ['styles']);
-})
+});
 
 gulp.task('default', ['scripts', 'styles', 'html', 'browser-sync', 'watch']);

@@ -30,6 +30,8 @@ var Operations = {
                 }
                 operand1 = rval;
                 return operand1;
+            } else {
+                return operand1;
             }
         }
     },
