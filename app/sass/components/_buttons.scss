@@ -8,32 +8,25 @@ button  {
   border-radius: 5%;
   transition: background-color 1s ease-out;
   cursor: pointer;
-
-
   &:hover {
     background-color: lighten( $btn-color, 20% );
     transition: background-color 0.5s ease-out;
   }
-
   @include mq-not-mobile{
     box-shadow: 0 5px rgba($btn-color, .4),
                 0 7px 10px rgba($btn-color, .5);
   }
 }
-
 .active {
   @include mq-not-mobile{
     animation: clicked 0.3s linear;
   }
-
 }
 .clear, .deleteLastNumber, .deleteOneDigit {
   background-color: $delete-btn-color;
-
   &:hover {
     background-color: lighten( $delete-btn-color, 20%);
   }
-
   @include mq-not-mobile{
     box-shadow: 0 5px rgba($delete-btn-color, .4),
     0 7px 10px rgba($delete-btn-color, .5);

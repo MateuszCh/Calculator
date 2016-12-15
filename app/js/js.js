@@ -32,7 +32,52 @@
     var equal = document.querySelector(".score[value='=']");
     var dot = document.querySelector(".numbers[value='.']");
     var oneDigit = document.querySelector(".deleteOneDigit");
-
+    //object containing functions for operations on single number
+    var Operations = {
+        power: {
+            type: "power",
+            operation: function (operand1) {
+                return Math.pow(operand1, 2);
+            }
+        },
+        root: {
+            type: "root",
+            operation: function (operand1) {
+                return Math.sqrt(operand1);
+            }
+        },
+        reciprocal: {
+            type: "reciprocal",
+            operation: function (operand1) {
+                return 1 / operand1;
+            }
+        },
+        factorial:    {
+            type: "factorial",
+            operation: function (operand1) {
+                if(Math.floor(operand1) == operand1 && operand1 >= 0){
+                    var rval = 1;
+                    for (var i = 2; i <= operand1; i++){
+                        rval = rval * i;
+                    }
+                    operand1 = rval;
+                    return operand1;
+                } else {
+                    return operand1;
+                }
+            }
+        },
+        changeSign: {
+            type: "changeSign",
+            operation: function (operand1) {
+                if(operand1 < 0){
+                    return Math.abs(operand1);
+                } else if(operand1 > 0){
+                    return operand1 - (2*operand1);
+                }
+            }
+        }
+    };
     // Object containing functions for each button
     var TypeOfButton = {
         //function for buttons from 0-9 and .
@@ -327,7 +372,6 @@
     //simulate click events on buttons when inputs is made with keyboard
     document.addEventListener("keydown", function (e) {
         e = e || window.event;
-        // e.preventDefault();
         if(e.key){
             switch (e.key){
                 case "1":
@@ -388,60 +432,70 @@
             }
         } else {
             switch (e.keyCode){
-                case "97":
+                case 49:
+                case 97:
                     one.click();
                     break;
-                case "98":
+                case 50:
+                case 98:
                     two.click();
                     break;
-                case "99":
+                case 51:
+                case 99:
                     three.click();
                     break;
-                case "100":
+                case 52:
+                case 100:
                     four.click();
                     break;
-                case "101":
+                case 53:
+                case 101:
                     five.click();
                     break;
-                case "102":
+                case 54:
+                case 102:
                     six.click();
                     break;
-                case "103":
+                case 55:
+                case 103:
                     seven.click();
                     break;
-                case "104":
+                case 56:
+                case 104:
                     eight.click();
                     break;
-                case "105":
+                case 57:
+                case 105:
                     nine.click();
                     break;
-                case "96":
+                case 48:
+                case 96:
                     zero.click();
                     break;
-                case "46":
+                case 46:
                     del.click();
                     break;
-                case "107":
+                case 107:
                     add.click();
                     break;
-                case "109":
+                case 109:
                     subt.click();
                     break;
-                case "111":
+                case 111:
                     divis.click();
                     break;
-                case "106":
+                case 106:
                     multi.click();
                     break;
-                case "13":
+                case 13:
                     equal.click();
                     break;
-                case "110":
-                case "188":
-                case "190":
+                case 110:
+                case 188:
+                case 190:
                     dot.click();
                     break;
-                case "8":
+                case 8:
                     oneDigit.click();
                     break;
             }

@@ -31,7 +31,7 @@ gulp.task('styles', function(){
 // Scripts Task
 //Uglifies
 gulp.task('scripts', function(){
-    gulp.src(['app/js/oneNumberOperations.js', 'app/js/js.js'])
+    gulp.src(['app/js/js.js'])
         .pipe(uglify())
         .on('error', errorLog)
         .pipe(concat('main.js'))
